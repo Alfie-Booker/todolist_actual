@@ -9,7 +9,7 @@ session_start();
 $username = $_POST['username'];
 $password_in = $_POST['password'];
 
-$sql = "SELECT * FROM membs WHERE username = ?";
+$sql = "SELECT * FROM user WHERE username = ?";
 
 $stat = $conn->prepare($sql);
 
@@ -31,7 +31,7 @@ if($result){
         $act = "log";
         $logtime = time();
 
-        $sql = "INSERT INTO activity (userid, activity, date) VALUES (?,?,?)";
+        $sql = "INSERT INTO audit (userid, action, time) VALUES (?,?,?)";
         $stat = $conn->prepare($sql);
 
         $stat->bindParam(1, $_SESSION['userid']);
@@ -39,7 +39,7 @@ if($result){
         $stat->bindParam(3, $logtime);
         $stat->execute();
 
-        header("refresh:1; url=profile.php");
+        header("refresh:1; url=main.php");
         echo "You have logged in";
 
     }else{echo 'incorrect login details';}

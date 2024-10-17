@@ -12,7 +12,7 @@ $new_password2 = $_POST['new_password2'];
 $count = 0;
 
 //gets the data for the username
-$sql = "SELECT * FROM membs WHERE username = ?";
+$sql = "SELECT * FROM user WHERE username = ?";
 $stat = $conn->prepare($sql);
 $stat->bindParam(1,$_SESSION['username']);
 $stat -> execute();
@@ -29,7 +29,7 @@ if (password_verify($password_in,$password)) {
     if ($new_password == $new_password2) {
         echo "pass match <br>";
         $new_password = password_hash($new_password, PASSWORD_DEFAULT);
-        $sql = "UPDATE membs SET password = ? WHERE username = ?";
+        $sql = "UPDATE user SET password = ? WHERE username = ?";
         $stat = $conn->prepare($sql);
         $stat->bindParam(1,$new_password);
         $stat->bindParam(2,$_SESSION['username']);
@@ -48,7 +48,7 @@ if($count>0){
 $logtime = time();
 
 //inserts the action time and username into the audit log
-$sql = "INSERT INTO activity (userid, activity, date) VALUES (?,?,?)";
+$sql = "INSERT INTO audit (userid, action, time) VALUES (?,?,?)";
 $stat = $conn->prepare($sql);
 $stat->bindParam(1, $_SESSION['userid']);
 $stat->bindParam(2, $act);

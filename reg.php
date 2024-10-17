@@ -8,13 +8,13 @@ $username = $_POST['username'];
 $password = $_POST['password'];
 $cpassword = $_POST['cpassword'];
 $fname = $_POST['fname'];
-$sname = $_POST['sname'];
+$lname = $_POST['sname'];
 $email = $_POST['email'];
 $date = date("Y-m-d");
 
 
 //checks that the new username is unique
-$sql = "SELECT username FROM membs WHERE username = ?";
+$sql = "SELECT username FROM user WHERE username = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(1,$username);
 $stmt -> execute();
@@ -38,14 +38,14 @@ else {
 {
     $hpassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO membs (username, password, fname, sname, email, signup) VALUES (?,?,?,?,?,?)";
+    $sql = "INSERT INTO user (username, password, fname, lname, email, time) VALUES (?,?,?,?,?,?)";
 
     $stat = $conn->prepare($sql);
 
     $stat->bindParam(1, $username);
     $stat->bindParam(2, $hpassword);
     $stat->bindParam(3, $fname);
-    $stat->bindParam(4, $sname);
+    $stat->bindParam(4, $lname);
     $stat->bindParam(5, $email);
     $stat->bindParam(6, $date);
     $stat->execute();
