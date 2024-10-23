@@ -3,8 +3,8 @@ body {
 }
 
 h1 {
-  color: white;
-  text-align: center;
+  color: darkcyan;
+  text-align: left;
 }
 ul {
   list-style-type: none;

@@ -9,13 +9,17 @@ $name = $_POST['name'];
 $time = time();
 $listid = $_POST['list'];
 
-$sql = "INSERT INTO list_element (listid,name, time) VALUES (?,?,?)";
-$stat = $conn->prepare($sql);
-$stat->bindParam(1, $listid);
-$stat->bindParam(2, $name);
-$stat->bindParam(3, $time);
-$stat->execute();
-
+try {
+    $sql = "INSERT INTO list_element (listid,name, time) VALUES (?,?,?)";
+    $stat = $conn->prepare($sql);
+    $stat->bindParam(1, $listid);
+    $stat->bindParam(2, $name);
+    $stat->bindParam(3, $time);
+    $stat->execute();
+}
+catch (PDOException $e) {
+    echo $e->getMessage();
+}
 echo "new list element created";
 header("refresh:1; url=main.php");
 ?>
